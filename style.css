@@ -1,0 +1,143 @@
+@property --title-offset {
+	syntax: '<number>';
+	initial-value: 0;
+	inherits: true;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	color-scheme: dark;
+}
+
+body {
+	margin: 0;
+	font-family: Roboto, sans-serif;
+	color: white;
+	background-color: #181818;
+}
+
+#landing {
+	height: 100svh;
+	background: linear-gradient(180deg, #101010, #181818);
+	user-select: none;
+}
+
+#background {
+	mix-blend-mode: plus-lighter;
+	pointer-events: none;
+
+	#black-layer,
+	#noise-layer {
+		position: absolute;
+		top: 0;
+		height: calc(100svh + 100px);
+		width: 100%;
+	}
+
+	#black-layer {
+		background-color: black;
+	}
+
+	#background-layer {
+		filter: blur(100px);
+	}
+
+	#noise-layer {
+		background-image: url('/images/noise.png');
+		mix-blend-mode: overlay;
+	}
+}
+
+#title {
+	display: flex;
+	position: absolute;
+	inset: 0;
+	justify-content: center;
+	align-items: center;
+	overflow-x: clip;
+}
+
+#glow-title {
+	--title-start-offset: 4;
+	--title-end-offset: 3;
+	--title-offset: var(--title-start-offset);
+
+	font-size: min(10vw, 144px);
+	font-family: 'Roboto Mono', sans-serif;
+	font-weight: bold;
+	line-height: 1;
+	animation: title-animation linear both;
+	animation-timeline: view();
+	animation-range-start: calc(50svh + 1lh);
+
+	.line {
+		--text: attr(data-text);
+
+		position: relative;
+		min-width: max-content;
+
+		&:first-child {
+			right: calc(50% - (1ch * (var(--title-offset) - 1)));
+			text-align: end;
+		}
+
+		&:last-child {
+			left: calc(50% - (1ch * (var(--title-offset) + 1)));
+		}
+
+		::after {
+			content: var(--text);
+			display: block;
+			text-transform: uppercase;
+		}
+
+		.shadow-layer,
+		.glow-layer {
+			position: absolute;
+			inset: 0;
+		}
+
+		.shadow-layer {
+			color: white;
+			text-shadow: 2px 2px 4px #0008;
+			mix-blend-mode: multiply;
+		}
+
+		.base-layer {
+			color: white;
+			mix-blend-mode: overlay;
+		}
+
+		.glow-layer {
+			color: transparent;
+			text-shadow: 0 0 calc(1em / 16) black, 0 0 white;
+			mix-blend-mode: color-dodge;
+		}
+	}
+}
+
+@keyframes title-animation {
+  from { --title-offset: var(--title-start-offset); }
+  to { --title-offset: var(--title-end-offset); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#glow-title {
+		animation: none;
+	}
+}
+
+@media (prefers-contrast: more), (prefers-reduced-transparency: reduce) {
+	#glow-title .line {
+		.glow-layer {
+			display: none;
+		}
+
+		.base-layer {
+			mix-blend-mode: normal;
+		}
+	}
+}

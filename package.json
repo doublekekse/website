@@ -1,0 +1,15 @@
+{
+	"type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build"
+	},
+	"dependencies": {
+		"three": "^0.178.0"
+	},
+	"devDependencies": {
+		"autoprefixer": "^10.4.21",
+		"vite": "^6.3.5"
+	},
+	"license": "MIT"
+}
