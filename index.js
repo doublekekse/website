@@ -3,7 +3,7 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import halfSphere from '/models/half-sphere.obj?url';
 
 const landing = document.getElementById('landing');
-const backgroundLayer = document.getElementById('background-layer');
+const background = document.getElementById('background');
 
 let width = landing.clientWidth;
 let height = landing.clientHeight;
@@ -25,7 +25,7 @@ window.addEventListener('resize', () => {
 	camera.updateProjectionMatrix();
 });
 
-backgroundLayer.appendChild(renderer.domElement);
+background.appendChild(renderer.domElement);
 
 const loader = new OBJLoader();
 const scene = new Scene();

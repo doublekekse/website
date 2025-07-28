@@ -29,23 +29,24 @@ body {
 	mix-blend-mode: plus-lighter;
 	pointer-events: none;
 
-	#black-layer,
-	#noise-layer {
+	&::before,
+	&::after {
+		content: '';
 		position: absolute;
 		top: 0;
 		height: calc(100svh + 100px);
 		width: 100%;
 	}
 
-	#black-layer {
+	&::before {
 		background-color: black;
 	}
 
-	#background-layer {
+	canvas {
 		filter: blur(100px);
 	}
 
-	#noise-layer {
+	&::after {
 		background-image: url('/images/noise.png');
 		mix-blend-mode: overlay;
 	}
@@ -66,7 +67,7 @@ body {
 	--title-offset: var(--title-start-offset);
 
 	font-size: min(10vw, 144px);
-	font-family: 'Roboto Mono', sans-serif;
+	font-family: 'Roboto Mono', monospace;
 	font-weight: bold;
 	line-height: 1;
 	animation: title-animation linear both;
@@ -74,22 +75,27 @@ body {
 	animation-range-start: calc(50svh + 1lh);
 
 	.line {
-		--text: attr(data-text);
-
 		position: relative;
 		min-width: max-content;
 
 		&:first-child {
 			right: calc(50% - (1ch * (var(--title-offset) - 1)));
 			text-align: end;
+
+			::after {
+				content: 'we create';
+			}
 		}
 
 		&:last-child {
 			left: calc(50% - (1ch * (var(--title-offset) + 1)));
+
+			::after {
+				content: 'pixel stuff';
+			}
 		}
 
 		::after {
-			content: var(--text);
 			display: block;
 			text-transform: uppercase;
 		}
