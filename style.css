@@ -79,19 +79,21 @@ body {
 		min-width: max-content;
 
 		&:first-child {
-			right: calc(50% - (1ch * (var(--title-offset) - 1)));
+			right: 50%;
 			text-align: end;
 
 			::after {
 				content: 'we create';
+				transform: translateX(calc(1ch * (var(--title-offset) - 1)));
 			}
 		}
 
 		&:last-child {
-			left: calc(50% - (1ch * (var(--title-offset) + 1)));
+			left: 50%;
 
 			::after {
 				content: 'pixel stuff';
+				transform: translateX(calc((-1ch * (var(--title-offset) + 1))));
 			}
 		}
 
