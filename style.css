@@ -62,15 +62,11 @@ body {
 }
 
 #glow-title {
-	--title-start-offset: 4;
-	--title-end-offset: 3;
-	--title-offset: var(--title-start-offset);
-
 	font-size: min(10vw, 144px);
 	font-family: 'Roboto Mono', monospace;
 	font-weight: bold;
 	line-height: 1;
-	animation: title-animation linear both;
+	animation: title-scroll-animation linear both;
 	animation-timeline: view();
 	animation-range-start: calc(50svh + 1lh);
 
@@ -79,21 +75,21 @@ body {
 		min-width: max-content;
 
 		&:first-child {
-			right: 50%;
+			right: calc(50% - 3ch);
 			text-align: end;
 
 			::after {
 				content: 'we create';
-				transform: translateX(calc(1ch * (var(--title-offset) - 1)));
+				animation: title-fade-in-first 800ms 200ms ease both;
 			}
 		}
 
 		&:last-child {
-			left: 50%;
+			left: calc(50% - 5ch);
 
 			::after {
 				content: 'pixel stuff';
-				transform: translateX(calc((-1ch * (var(--title-offset) + 1))));
+				animation: title-fade-in-last 800ms 400ms ease both;
 			}
 		}
 
@@ -127,14 +123,37 @@ body {
 	}
 }
 
-@keyframes title-animation {
-  from { --title-offset: var(--title-start-offset); }
-  to { --title-offset: var(--title-end-offset); }
+@keyframes title-scroll-animation {
+  from { --title-offset: 0; }
+  to { --title-offset: 1; }
+}
+
+@keyframes title-fade-in-first {
+	from {
+		translate: calc((var(--title-offset)) * -1ch) 100%;
+		transform: skewY(5deg);
+		opacity: 0;
+	}
+	to { translate: calc(var(--title-offset) * -1ch); }
+}
+
+@keyframes title-fade-in-last {
+	from {
+		translate: calc((var(--title-offset)) * 1ch) 100%;
+		transform: skewY(5deg);
+		opacity: 0;
+	}
+	to { translate: calc(var(--title-offset) * 1ch); }
 }
 
 @media (prefers-reduced-motion: reduce) {
 	#glow-title {
+		.line:first-child,
+		.line:last-child {
+			::after {
 		animation: none;
+			}
+		}
 	}
 }
 
