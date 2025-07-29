@@ -19,6 +19,10 @@ body {
 	background-color: #181818;
 }
 
+canvas {
+	display: block;
+}
+
 #landing {
 	height: 100svh;
 	background: linear-gradient(180deg, #101010, #181818);
@@ -124,8 +128,8 @@ body {
 }
 
 @keyframes title-scroll-animation {
-  from { --title-offset: 0; }
-  to { --title-offset: 1; }
+	from { --title-offset: 0; }
+	to { --title-offset: 1; }
 }
 
 @keyframes title-fade-in-first {
@@ -151,7 +155,7 @@ body {
 		.line:first-child,
 		.line:last-child {
 			::after {
-		animation: none;
+				animation: none;
 			}
 		}
 	}
