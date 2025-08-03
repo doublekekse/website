@@ -63,14 +63,20 @@ canvas {
 	justify-content: center;
 	align-items: center;
 	overflow-x: clip;
+
+	h1 {
+		position: absolute;
+		height: 0;
+		overflow: clip;
+	}
 }
 
 #glow-title {
-	font-size: min(10vw, 144px);
+	font-size: max(4rem, min(10vw, 144px));
 	font-family: 'Roboto Mono', monospace;
 	font-weight: bold;
 	line-height: 1;
-	animation: title-scroll-animation linear both;
+	animation: title-scroll linear both;
 	animation-timeline: view();
 	animation-range-start: calc(50svh + 1lh);
 
@@ -78,13 +84,20 @@ canvas {
 		position: relative;
 		min-width: max-content;
 
+		::after {
+			display: block;
+			text-transform: uppercase;
+			animation: title-fade-in 800ms ease both;
+		}
+
 		&:first-child {
 			right: calc(50% - 3ch);
 			text-align: end;
 
 			::after {
+				--ch: -1ch;
 				content: 'we create';
-				animation: title-fade-in-first 800ms 200ms ease both;
+				animation-delay: 200ms;
 			}
 		}
 
@@ -92,14 +105,10 @@ canvas {
 			left: calc(50% - 5ch);
 
 			::after {
+				--ch: 1ch;
 				content: 'pixel stuff';
-				animation: title-fade-in-last 800ms 400ms ease both;
+				animation-delay: 400ms;
 			}
-		}
-
-		::after {
-			display: block;
-			text-transform: uppercase;
 		}
 
 		.shadow-layer,
@@ -127,27 +136,35 @@ canvas {
 	}
 }
 
-@keyframes title-scroll-animation {
-	from { --title-offset: 0; }
-	to { --title-offset: 1; }
-}
+@media (max-width: 576px) {
+	#glow-title {
+		font-size: 4rem;
 
-@keyframes title-fade-in-first {
-	from {
-		translate: calc((var(--title-offset)) * -1ch) 100%;
-		transform: skewY(5deg);
-		opacity: 0;
-	}
-	to { translate: calc(var(--title-offset) * -1ch); }
-}
+		.line:first-child,
+		.line:last-child {
+			left: unset;
+			right: unset;
+			text-align: unset;
 
-@keyframes title-fade-in-last {
-	from {
-		translate: calc((var(--title-offset)) * 1ch) 100%;
-		transform: skewY(5deg);
-		opacity: 0;
+			::after {
+				white-space: pre;
+				transition: opacity 800ms 200ms;
+				animation: none;
+
+				@starting-style {
+					opacity: 0;
+				}
+			}
+
+			&:first-child ::after {
+				content: ' we\A create';
+			}
+
+			&:last-child ::after {
+				content: '  pixel\A  stuff';
+			}
+		}
 	}
-	to { translate: calc(var(--title-offset) * 1ch); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -171,4 +188,18 @@ canvas {
 			mix-blend-mode: normal;
 		}
 	}
+}
+
+@keyframes title-scroll {
+	from { --title-offset: 0; }
+	to { --title-offset: 1; }
+}
+
+@keyframes title-fade-in {
+	from {
+		translate: calc((var(--title-offset)) * var(--ch)) 100%;
+		transform: skewY(5deg);
+		opacity: 0;
+	}
+	to { translate: calc(var(--title-offset) * var(--ch)); }
 }
