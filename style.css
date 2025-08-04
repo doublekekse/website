@@ -51,8 +51,9 @@ canvas {
 	}
 
 	&::after {
-		background-image: url('/images/noise.webp');
+		background-image: url('/images/noise.webp'), url('/images/dots.webp');
 		mix-blend-mode: overlay;
+		image-rendering: pixelated;
 	}
 }
 
