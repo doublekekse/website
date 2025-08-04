@@ -55,7 +55,7 @@ export async function renderBackground() {
 	const camera = new Camera(gl);
 
 	renderer.setSize(width, height);
-	camera.perspective({ aspect: width / height });
+	camera.perspective({ aspect: Math.min(width / height, 1.5) });
 
 	camera.position.z = 100;
 
@@ -64,7 +64,7 @@ export async function renderBackground() {
 		height = landing.clientHeight;
 
 		renderer.setSize(width, height);
-		camera.perspective({ aspect: width / height });
+		camera.perspective({ aspect: Math.min(width / height, 1.5) });
 	});
 
 	// Create three differently colored half spheres

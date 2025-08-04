@@ -73,7 +73,7 @@ canvas {
 }
 
 #glow-title {
-	font-size: max(4rem, min(10vw, 144px));
+	font-size: max(4rem, min(10vw, 120px));
 	font-family: 'Roboto Mono', monospace;
 	font-weight: bold;
 	line-height: 1;
@@ -88,7 +88,7 @@ canvas {
 		::after {
 			display: block;
 			text-transform: uppercase;
-			animation: title-fade-in 800ms ease both;
+			animation: title-fade-in 800ms ease both, title-ios-fix 1s infinite;
 		}
 
 		&:first-child {
@@ -150,7 +150,7 @@ canvas {
 			::after {
 				white-space: pre;
 				transition: opacity 800ms 200ms;
-				animation: none;
+				animation: title-ios-fix 1s infinite;
 
 				@starting-style {
 					opacity: 0;
@@ -173,7 +173,7 @@ canvas {
 		.line:first-child,
 		.line:last-child {
 			::after {
-				animation: none;
+				animation: title-ios-fix 1s infinite;
 			}
 		}
 	}
@@ -203,4 +203,8 @@ canvas {
 		opacity: 0;
 	}
 	to { translate: calc(var(--title-offset) * var(--ch)); }
+}
+
+@keyframes title-ios-fix {
+	to { scale: 1; }
 }
